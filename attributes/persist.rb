@@ -1,8 +1,10 @@
 
 default.elastic_chef.server = "localhost:9200"
 
+es_server = elastic_chef.server
+
 Tire.configure do
-  url elastic_chef.server
+  url es_server
 end if TIREFOUND
 
 node.persist(
