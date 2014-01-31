@@ -22,9 +22,9 @@ class Node
   property :hostname, :type => 'string'
   property :env, :type => 'string'
   property :region, :type => 'string'
-  property :roles, :default => [], :type => 'array'
-  property :recipes, :default => [], :type => 'array'
-  property :run_list, :default => [], :type => 'array'
+  property :roles, :default => [], :type => 'string', :index_name => 'role'
+  property :recipes, :default => [], :type => 'string', :index_name => 'recipe'
+  property :run_list, :default => [], :type => 'string', :index_name => 'run_item'
   property :network, :default => Mash.new, :type => 'object'
   property :started, :default => Time.now, :type => 'date'
 
