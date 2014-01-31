@@ -37,8 +37,7 @@ class Node
   } do
 
     Array(Chef::Config[:elasticsearch]).each do |key,val|
-
-      Tire::Configuration.send(key.to_sym, val) if Tire::Configuration.respond_to? key.to_sym
+      Tire::Configuration.send(key.to_sym, *val) if Tire::Configuration.respond_to? key.to_sym
     end
 
     create_elasticsearch_index
