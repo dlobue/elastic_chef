@@ -5,6 +5,7 @@ es_server = elastic_chef.server
 
 Tire.configure do
   url es_server
+  pretty true
 end if TIREFOUND
 
 node.persist(
