@@ -1,14 +1,13 @@
 
-class ReadOnlyAttribute < Exception
-end
-
 begin
   require 'tire'
   require 'tire/model/dynamic_persistence'
   TIREFOUND = true
 rescue LoadError => e
+  Chef::Log.warn("Error loading tire", e)
   TIREFOUND = false
 end
+
 
 class Node
   include Tire::Model::Persistence
@@ -35,34 +34,15 @@ class Node
         :type => "keyword"
       }
     }
-  }
+  } do
 
-  #mapping :analyzer => "not_analyzed" wait, not_analyzed goes to index
+    Array(Chef::Config[:elasticsearch]).each do |key,val|
 
-  #alias :id :fqdn
-  #alias :fqdn :id
-  #alias :_fqdn= :fqdn= unless instance_methods.include? :_fqdn=
+      Tire.configuration.send(key.to_sym, val) if Tire.configuration.responds_to? key.to_sym
+    end
 
-  #def fqdn=(*arg)
-    #raise ReadOnlyAttribute unless @fqdn.nil?
-    #_fqdn=(*arg)
-  #end
+    create_elasticsearch_index
+  end
 
 end if TIREFOUND
-
-
-
-# ex: short_search(:region => 'ord1', :deployment => 'prod', :roles => "base", :roles => "seed")
-def short_search(args={})
-  return unless TIREFOUND
-  Node.search do
-    query do
-      boolean do
-        args.each do |key,val|
-          must { term key, val }
-        end
-      end
-    end
-  end
-end
 

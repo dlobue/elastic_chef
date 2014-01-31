@@ -1,13 +1,4 @@
 
-default.elastic_chef.server = "localhost:9200"
-
-es_server = elastic_chef.server
-
-Tire.configure do
-  url es_server
-  pretty true
-end if TIREFOUND
-
 node.persist(
   :id => fqdn,
   :fqdn => fqdn,
