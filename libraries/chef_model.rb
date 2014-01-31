@@ -29,7 +29,8 @@ class Node
   property :network, :default => Mash.new, :type => 'object'
   property :started, :default => Time.now, :type => 'date'
 
-  mapping :analyzer => "not_analyzed"
+  mapping :analyzer => "keyword"
+  #mapping :analyzer => "not_analyzed" wait, not_analyzed goes to index
 
   #alias :id :fqdn
   #alias :fqdn :id
