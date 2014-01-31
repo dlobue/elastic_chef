@@ -4,11 +4,11 @@ require ::File.join(::File.dirname(__FILE__), 'chef_model') unless defined? TIRE
 class Chef::Node
   def persist(args={})
     return @persist unless @persist.nil?
-    raise Exception if args.empty? or !args.has_key? :id
     if !TIREFOUND
       Chef::Log.warn("tire lib wasn't found!")
-      return
+      return @persist = args #TODO: turn this into an openstruct
     end
+    raise Exception if args.empty? or !args.has_key? :id
     if Node.kind_of? Chef::Node
       Chef::Log.error("wrong kind of node!!!")
       raise Exception
