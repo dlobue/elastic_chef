@@ -17,19 +17,26 @@ class Node
 
   validates_presence_of :id, :fqdn, :env, :region
 
-  property :id
-  property :fqdn
-  property :name
-  property :hostname
-  property :env
-  property :region
+  property :id, :type => 'string'
+  property :fqdn, :type => 'string'
+  property :name, :type => 'string'
+  property :hostname, :type => 'string'
+  property :env, :type => 'string'
+  property :region, :type => 'string'
   property :roles, :default => [], :type => 'array'
   property :recipes, :default => [], :type => 'array'
   property :run_list, :default => [], :type => 'array'
   property :network, :default => Mash.new, :type => 'object'
   property :started, :default => Time.now, :type => 'date'
 
-  mapping :analyzer => "keyword"
+  settings :analysis => {
+    :analyzer => {
+      :default => {
+        :type => "keyword"
+      }
+    }
+  }
+
   #mapping :analyzer => "not_analyzed" wait, not_analyzed goes to index
 
   #alias :id :fqdn
